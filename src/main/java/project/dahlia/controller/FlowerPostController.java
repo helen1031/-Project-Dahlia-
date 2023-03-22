@@ -5,30 +5,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.dahlia.dto.PostDTO;
 import project.dahlia.dto.ResponseDTO;
-import project.dahlia.model.PostEntity;
-import project.dahlia.service.PostService;
+import project.dahlia.model.FlowerPostEntity;
+import project.dahlia.service.FlowerPostService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("post")
-public class PostController {
+@RequestMapping("flower-post")
+public class FlowerPostController {
 
     @Autowired
-    private PostService service;
+    private FlowerPostService service;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<?> createPost(@RequestBody PostDTO dto){
         try {
             String temporaryUserId = "temporary-user";
 
-            PostEntity entity = PostDTO.toEntity(dto);
+            FlowerPostEntity entity = PostDTO.toEntity(dto);
             entity.setId(null);
 
             entity.setUserId(temporaryUserId);
 
-            List<PostEntity> entities = service.create(entity);
+            List<FlowerPostEntity> entities = service.create(entity);
 
             List<PostDTO> dtos = entities.stream().map(PostDTO::new).collect(Collectors.toList());
 
@@ -46,7 +46,7 @@ public class PostController {
     public ResponseEntity<?> retrievePostList() {
         String temporaryUserId = "temporary-user";
 
-        List<PostEntity> entities = service.retrieve(temporaryUserId);
+        List<FlowerPostEntity> entities = service.retrieve(temporaryUserId);
 
         List<PostDTO> dtos = entities.stream().map(PostDTO::new).collect(Collectors.toList());
 
@@ -59,10 +59,10 @@ public class PostController {
     public ResponseEntity<?> updatePost(@RequestBody PostDTO dto) {
         String temporaryUserId = "temporary-user";
 
-        PostEntity entity = PostDTO.toEntity(dto);
+        FlowerPostEntity entity = PostDTO.toEntity(dto);
         entity.setUserId(temporaryUserId);
 
-        List<PostEntity> entities = service.update(entity);
+        List<FlowerPostEntity> entities = service.update(entity);
 
         List<PostDTO> dtos = entities.stream().map(PostDTO::new).collect(Collectors.toList());
 
@@ -76,10 +76,10 @@ public class PostController {
         try {
             String temporaryUserId = "temporary-user";
 
-            PostEntity entity = PostDTO.toEntity(dto);
+            FlowerPostEntity entity = PostDTO.toEntity(dto);
             entity.setUserId(temporaryUserId);
 
-            List<PostEntity> entities = service.delete(entity);
+            List<FlowerPostEntity> entities = service.delete(entity);
 
             List<PostDTO> dtos = entities.stream().map(PostDTO::new).collect(Collectors.toList());
 

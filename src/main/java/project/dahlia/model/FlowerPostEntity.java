@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "Post")
-public class PostEntity {
+public class FlowerPostEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
@@ -30,6 +30,9 @@ public class PostEntity {
     private int flowerColor1;
     private int flowerColor2;
     private int flowerColor3;
+
+    // 키는 코드로 관리한다(enum)
+    private int flowerHeight;
 
     private String flowerFeature;
 

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import project.dahlia.model.PostEntity;
+import project.dahlia.model.FlowerPostEntity;
 
 @Builder
 @NoArgsConstructor
@@ -22,6 +22,8 @@ public class PostDTO {
 
     private String flowerFeature;
 
+    private int flowerHeight;
+
     // 이미지는 최대 5장까지 업로드 가능
     private String flowerImg1;
     private String flowerImg2;
@@ -34,13 +36,14 @@ public class PostDTO {
     // 해당 게시물의 공개범위 설정 : 본인, 이웃, 전체공개
     private int disclosureScope;
 
-    public PostDTO(final PostEntity entity) {
+    public PostDTO(final FlowerPostEntity entity) {
         this.id = entity.getId();
         this.flowerName = entity.getFlowerName();
         this.flowerColor1 = entity.getFlowerColor1();
         this.flowerColor2 = entity.getFlowerColor2();
         this.flowerColor3 = entity.getFlowerColor3();
         this.flowerFeature = entity.getFlowerFeature();
+        this.flowerHeight = entity.getFlowerHeight();
         this.flowerImg1 = entity.getFlowerImg1();
         this.flowerImg2 = entity.getFlowerImg2();
         this.flowerImg3 = entity.getFlowerImg3();
@@ -50,14 +53,15 @@ public class PostDTO {
         this.disclosureScope = entity.getDisclosureScope();
     }
 
-    public static PostEntity toEntity(final PostDTO dto) {
-        return PostEntity.builder()
+    public static FlowerPostEntity toEntity(final PostDTO dto) {
+        return FlowerPostEntity.builder()
                 .id(dto.getId())
                 .flowerName(dto.getFlowerName())
                 .flowerColor1(dto.getFlowerColor1())
                 .flowerColor2(dto.getFlowerColor2())
                 .flowerColor3(dto.getFlowerColor3())
                 .flowerFeature(dto.getFlowerFeature())
+                .flowerHeight(dto.getFlowerHeight())
                 .flowerImg1(dto.getFlowerImg1())
                 .flowerImg2(dto.getFlowerImg2())
                 .flowerImg3(dto.getFlowerImg3())

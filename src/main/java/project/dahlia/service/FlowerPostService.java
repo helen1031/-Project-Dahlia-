@@ -3,20 +3,20 @@ package project.dahlia.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.dahlia.model.PostEntity;
-import project.dahlia.persistence.PostRepository;
+import project.dahlia.model.FlowerPostEntity;
+import project.dahlia.persistence.FlowerPostRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
-public class PostService {
+public class FlowerPostService {
 
     @Autowired
-    private PostRepository repository;
+    private FlowerPostRepository repository;
 
-    public List<PostEntity> create(final PostEntity entity) {
+    public List<FlowerPostEntity> create(final FlowerPostEntity entity) {
         validate(entity);
 
         repository.save(entity);
@@ -25,14 +25,14 @@ public class PostService {
         return repository.findByUserId(entity.getUserId());
     }
 
-    public List<PostEntity> retrieve(final String userId) {
+    public List<FlowerPostEntity> retrieve(final String userId) {
         return repository.findByUserId(userId);
     }
 
-    public List<PostEntity> update(final PostEntity entity) {
+    public List<FlowerPostEntity> update(final FlowerPostEntity entity) {
         validate(entity);
 
-        final Optional<PostEntity> original = repository.findById(entity.getId());
+        final Optional<FlowerPostEntity> original = repository.findById(entity.getId());
 
         original.ifPresent(post -> {
             post.setFlowerName(entity.getFlowerName());
@@ -54,7 +54,7 @@ public class PostService {
         return retrieve(entity.getUserId());
     }
 
-    public List<PostEntity> delete(final PostEntity entity) {
+    public List<FlowerPostEntity> delete(final FlowerPostEntity entity) {
         validate(entity);
 
         try {
@@ -65,7 +65,7 @@ public class PostService {
         return retrieve(entity.getUserId());
     }
 
-    private void validate(PostEntity entity) {
+    private void validate(FlowerPostEntity entity) {
         if(entity == null) {
             log.warn("Entity cannot be null.");
             throw new RuntimeException("Entity cannot be null.");
