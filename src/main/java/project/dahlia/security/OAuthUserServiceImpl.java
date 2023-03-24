@@ -46,7 +46,7 @@ public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
             oAuth2UserInfo = new KakaoUserInfo( (Map)oAuth2User.getAttributes() );
         } else if(provider.equals("naver")) {
             log.info("네이버 로그인 요청");
-            //oAuth2UserInfo = new NaverUserInfo( (Map)oAuth2User.getAttributes().get("response") );
+            oAuth2UserInfo = new NaverUserInfo( (Map)oAuth2User.getAttributes().get("response") );
         }
 
         final String providerId = oAuth2UserInfo.getProviderId();
@@ -59,6 +59,8 @@ public class OAuthUserServiceImpl extends DefaultOAuth2UserService {
         if (!userRepository.existsByUsername(username)) {
             userEntity = UserEntity.builder().username(username).email(email).authProvider(providerId).build();
             userEntity = userRepository.save(userEntity);
+        } else {
+            userEntity = userRepository.findByUsername(username);
         }
 
         log.info("Successfully pulled user info username {} authProvider {}", username , providerId);

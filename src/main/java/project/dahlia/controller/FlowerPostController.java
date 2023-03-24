@@ -2,6 +2,7 @@ package project.dahlia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import project.dahlia.dto.PostDTO;
 import project.dahlia.dto.ResponseDTO;
@@ -19,14 +20,15 @@ public class FlowerPostController {
     private FlowerPostService service;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createPost(@RequestBody PostDTO dto){
+    public ResponseEntity<?> createPost(@AuthenticationPrincipal String userId, @RequestBody PostDTO dto){
         try {
-            String temporaryUserId = "temporary-user";
+            //String temporaryUserId = "temporary-user";
 
             FlowerPostEntity entity = PostDTO.toEntity(dto);
+
             entity.setId(null);
 
-            entity.setUserId(temporaryUserId);
+            entity.setUserId(userId);
 
             List<FlowerPostEntity> entities = service.create(entity);
 
@@ -43,10 +45,10 @@ public class FlowerPostController {
     }
 
     @GetMapping
-    public ResponseEntity<?> retrievePostList() {
-        String temporaryUserId = "temporary-user";
+    public ResponseEntity<?> retrievePostList(@AuthenticationPrincipal String userId) {
+        //String temporaryUserId = "temporary-user";
 
-        List<FlowerPostEntity> entities = service.retrieve(temporaryUserId);
+        List<FlowerPostEntity> entities = service.retrieve(userId);
 
         List<PostDTO> dtos = entities.stream().map(PostDTO::new).collect(Collectors.toList());
 
@@ -56,11 +58,11 @@ public class FlowerPostController {
     }
 
     @PutMapping
-    public ResponseEntity<?> updatePost(@RequestBody PostDTO dto) {
-        String temporaryUserId = "temporary-user";
+    public ResponseEntity<?> updatePost(@AuthenticationPrincipal String userId, @RequestBody PostDTO dto) {
+        //String temporaryUserId = "temporary-user";
 
         FlowerPostEntity entity = PostDTO.toEntity(dto);
-        entity.setUserId(temporaryUserId);
+        entity.setUserId(userId);
 
         List<FlowerPostEntity> entities = service.update(entity);
 
@@ -72,12 +74,12 @@ public class FlowerPostController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deletePost(@RequestBody PostDTO dto) {
+    public ResponseEntity<?> deletePost(@AuthenticationPrincipal String userId, @RequestBody PostDTO dto) {
         try {
-            String temporaryUserId = "temporary-user";
+            //String temporaryUserId = "temporary-user";
 
             FlowerPostEntity entity = PostDTO.toEntity(dto);
-            entity.setUserId(temporaryUserId);
+            entity.setUserId(userId);
 
             List<FlowerPostEntity> entities = service.delete(entity);
 

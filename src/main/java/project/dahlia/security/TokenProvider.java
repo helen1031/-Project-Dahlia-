@@ -42,7 +42,7 @@ public class TokenProvider {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 // payload에 들어갈 내용
                 .setSubject(userEntity.getId()) // sub
-                .setIssuer("demo app") // iss
+                .setIssuer("dahlia") // iss
                 .setIssuedAt(new Date()) // iat
                 .setExpiration(expiryDate) // exp
                 .compact();
